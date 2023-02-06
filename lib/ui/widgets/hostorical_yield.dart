@@ -29,6 +29,9 @@ class _HistoricalYeildState extends State<HistoricalYeild> {
                 fontWeight: FontWeight.w400,
               ),
             ),
+            const SizedBox(
+              height: 24,
+            ),
             Row(
               children: [
                 Expanded(
@@ -60,6 +63,9 @@ class _HistoricalYeildState extends State<HistoricalYeild> {
                 )
               ],
             ),
+            const SizedBox(
+              height: 24,
+            ),
             Text(
               'For period',
               style: TextStyle(
@@ -67,6 +73,9 @@ class _HistoricalYeildState extends State<HistoricalYeild> {
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
               ),
+            ),
+            const SizedBox(
+              height: 24,
             ),
             Row(
               children: [
@@ -99,6 +108,9 @@ class _HistoricalYeildState extends State<HistoricalYeild> {
                 )
               ],
             ),
+            const SizedBox(
+              height: 24,
+            ),
             Text(
               'You would have',
               style: TextStyle(
@@ -106,6 +118,9 @@ class _HistoricalYeildState extends State<HistoricalYeild> {
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
               ),
+            ),
+            const SizedBox(
+              height: 24,
             ),
             Text.rich(
               TextSpan(
@@ -133,19 +148,6 @@ class _HistoricalYeildState extends State<HistoricalYeild> {
               decoration: const BoxDecoration(
                   color: Color.fromARGB(15, 158, 158, 158),
                   borderRadius: BorderRadius.all(Radius.circular(5))),
-              // child: ListView.builder(
-              //   scrollDirection: Axis.horizontal,
-              //   itemCount: 3,
-              //   physics: const NeverScrollableScrollPhysics(),
-              //   itemBuilder: (context, index) {
-              //     var list = const [
-              //       Coin(icon: 'assets/png/matic.png', text: 'MATIC'),
-              //       Coin(icon: 'assets/png/matic.png', text: 'BTC'),
-              //       Coin(icon: 'assets/png/eth.png', text: 'ETH'),
-              //     ];
-              //     return Coin(icon: list[index].icon, text: list[index].text);
-              //   },
-              // ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [

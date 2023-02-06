@@ -12,7 +12,12 @@ class IndicatorBottomSheet extends StatefulWidget {
 }
 
 class _IndicatorBottomSheetState extends State<IndicatorBottomSheet> {
-  var selectedCountry, selectedState;
+  var selectValue;
+  bool checkMA = false;
+  var selectRSI;
+  bool checkRSI = false;
+  var selectBOLL;
+  bool checkBOLL = false;
   var region = 'nigeria';
   @override
   Widget build(BuildContext context) {
@@ -60,94 +65,295 @@ class _IndicatorBottomSheetState extends State<IndicatorBottomSheet> {
           child: Column(
             children: [
               Row(
-                children: const [
-                  SelectedIndicator(),
+                children: [
+                  Visibility(
+                    visible: checkMA,
+                    child: SelectedIndicator(
+                      indicate: 'MA',
+                      callback: (bool value) {
+                        setState(() {
+                          checkMA = !checkMA;
+                        });
+                      },
+                    ),
+                  ),
+                  Visibility(
+                    visible: checkRSI,
+                    child: SelectedIndicator(
+                      indicate: 'RSI',
+                      callback: (bool value) {
+                        setState(() {
+                          checkRSI = !checkRSI;
+                        });
+                      },
+                    ),
+                  ),
+                  Visibility(
+                    visible: checkBOLL,
+                    child: SelectedIndicator(
+                      indicate: 'BOLL',
+                      callback: (bool value) {
+                        setState(() {
+                          checkBOLL = !checkBOLL;
+                        });
+                      },
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(
                 height: 18,
               ),
-              Row(
-                children: [
-                  SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: GFCheckbox(
-                      onChanged: (value) {},
-                      value: false,
-                      inactiveBgColor: AppColor().inactiveGrey,
-                    ),
-                  ),
-                  Expanded(
-                    child: DropdownButtonHideUnderline(
-                      child: GFDropdown(
-                        padding: const EdgeInsets.all(4),
-                        borderRadius: BorderRadius.circular(5),
-                        icon: Icon(
-                          IconlyLight.arrow_down_2,
-                          color: AppColor().inactiveGrey,
-                        ),
-                        itemHeight: 48,
-                        border: BorderSide(
-                            color: AppColor().indicatorColor, width: 2),
-                        dropdownButtonColor: AppColor().boxGrey,
-                        value: selectedCountry,
-                        onChanged: (newValue) {
-                          setState(() {});
-                        },
-                        style: const TextStyle(color: Colors.white),
-                        items: ['MA - Moving Average']
-                            .map((value) => DropdownMenuItem(
-                                  value: value,
-                                  child: Text(value),
-                                ))
-                            .toList(),
-                      ),
-                    ),
-                  ),
-                ],
-              )
+              MATick(),
+              const SizedBox(
+                height: 36,
+              ),
+              RSITick(),
+              const SizedBox(
+                height: 36,
+              ),
+              BOLLTick(),
             ],
           ),
         )
       ],
     );
   }
-}
 
-class SelectedIndicator extends StatelessWidget {
-  const SelectedIndicator({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 12),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(4),
+  Row MATick() {
+    return Row(
+      children: [
+        SizedBox(
+          height: 40,
+          width: 40,
+          child: GFCheckbox(
+            inactiveIcon: Icon(
+              Icons.check,
+              size: 12,
+              color: AppColor().grey,
+            ),
+            activeIcon: const Icon(
+              Icons.check,
+              size: 12,
+            ),
+            onChanged: (value) {
+              setState(() {
+                checkMA = !checkMA;
+              });
+            },
+            value: checkMA,
+            inactiveBgColor: AppColor().inactiveGrey,
+          ),
         ),
-        color: AppColor().indicatorColor,
-      ),
-      child: Row(
-        children: [
-          Text(
-            'MA',
-            style: TextStyle(
-              color: AppColor().neonBlue,
+        Expanded(
+          child: DropdownButtonHideUnderline(
+            child: GFDropdown(
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              borderRadius: BorderRadius.circular(5),
+              icon: Icon(
+                IconlyLight.arrow_down_2,
+                color: AppColor().inactiveGrey,
+              ),
+              dropdownColor: AppColor().grey,
+              itemHeight: 40,
+              border: BorderSide(color: AppColor().indicatorColor, width: 2),
+              dropdownButtonColor: AppColor().boxGrey,
+              value: selectValue,
+              onChanged: (newValue) {
+                setState(() {
+                  selectValue = newValue as String;
+                });
+              },
+              style: const TextStyle(color: Colors.white, fontSize: 15),
+              items: [
+                'MA - Moving Average',
+              ]
+                  .map((value) => DropdownMenuItem(
+                        value: value,
+                        child: Text(value),
+                      ))
+                  .toList(),
             ),
           ),
-          const SizedBox(
-            width: 8,
+        ),
+      ],
+    );
+  }
+
+  Row RSITick() {
+    return Row(
+      children: [
+        SizedBox(
+          height: 40,
+          width: 40,
+          child: GFCheckbox(
+            inactiveIcon: Icon(
+              Icons.check,
+              size: 12,
+              color: AppColor().grey,
+            ),
+            activeIcon: const Icon(
+              Icons.check,
+              size: 12,
+            ),
+            onChanged: (value) {
+              setState(() {
+                checkRSI = !checkRSI;
+              });
+            },
+            value: checkRSI,
+            inactiveBgColor: AppColor().inactiveGrey,
           ),
-          Icon(
-            Icons.close,
-            color: AppColor().inactiveGrey,
-            size: 16,
-          )
-        ],
+        ),
+        Expanded(
+          child: DropdownButtonHideUnderline(
+            child: GFDropdown(
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              borderRadius: BorderRadius.circular(5),
+              icon: Icon(
+                IconlyLight.arrow_down_2,
+                color: AppColor().inactiveGrey,
+              ),
+              dropdownColor: AppColor().grey,
+              itemHeight: 40,
+              border: BorderSide(color: AppColor().indicatorColor, width: 2),
+              dropdownButtonColor: AppColor().boxGrey,
+              value: selectRSI,
+              onChanged: (newValue) {
+                setState(() {
+                  selectRSI = newValue as String;
+                });
+              },
+              style: const TextStyle(color: Colors.white, fontSize: 15),
+              items: [
+                'RSI - Relative Strenth Index',
+              ]
+                  .map((value) => DropdownMenuItem(
+                        value: value,
+                        child: Text(value),
+                      ))
+                  .toList(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row BOLLTick() {
+    return Row(
+      children: [
+        SizedBox(
+          height: 40,
+          width: 40,
+          child: GFCheckbox(
+            inactiveIcon: Icon(
+              Icons.check,
+              size: 12,
+              color: AppColor().grey,
+            ),
+            activeIcon: const Icon(
+              Icons.check,
+              size: 12,
+            ),
+            onChanged: (value) {
+              setState(() {
+                checkBOLL = !checkBOLL;
+              });
+            },
+            value: checkBOLL,
+            inactiveBgColor: AppColor().inactiveGrey,
+          ),
+        ),
+        Expanded(
+          child: DropdownButtonHideUnderline(
+            child: GFDropdown(
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              borderRadius: BorderRadius.circular(5),
+              icon: Icon(
+                IconlyLight.arrow_down_2,
+                color: AppColor().inactiveGrey,
+              ),
+              dropdownColor: AppColor().grey,
+              itemHeight: 40,
+              border: BorderSide(color: AppColor().indicatorColor, width: 2),
+              dropdownButtonColor: AppColor().boxGrey,
+              value: selectBOLL,
+              onChanged: (newValue) {
+                setState(() {
+                  selectBOLL = newValue as String;
+                });
+              },
+              style: const TextStyle(color: Colors.white, fontSize: 15),
+              items: [
+                'BOLL - Bollinger Bands',
+              ]
+                  .map((value) => DropdownMenuItem(
+                        value: value,
+                        child: Text(value),
+                      ))
+                  .toList(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class SelectedIndicator extends StatefulWidget {
+  final String indicate;
+  final ValueSetter<bool>? callback;
+  const SelectedIndicator(
+      {Key? key, required this.indicate, required this.callback})
+      : super(key: key);
+
+  @override
+  State<SelectedIndicator> createState() => _SelectedIndicatorState();
+}
+
+class _SelectedIndicatorState extends State<SelectedIndicator> {
+  bool close = true;
+  @override
+  Widget build(BuildContext context) {
+    void tapDetected() {
+      setState(() {
+        close = !close;
+      });
+    }
+
+    return Visibility(
+      visible: close,
+      child: Container(
+        margin: const EdgeInsets.only(right: 12),
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(4),
+          ),
+          color: AppColor().indicatorColor,
+        ),
+        child: Row(
+          children: [
+            Text(
+              widget.indicate,
+              style: TextStyle(
+                color: AppColor().neonBlue,
+              ),
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            GestureDetector(
+              onTap: tapDetected,
+              child: Icon(
+                Icons.close,
+                color: AppColor().inactiveGrey,
+                size: 16,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
