@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
           primary: Colors.black,
         ),
         textTheme: Theme.of(context).textTheme.apply(
+              fontFamily: 'SF',
               bodyColor: Colors.white,
               displayColor: Colors.white,
             ),

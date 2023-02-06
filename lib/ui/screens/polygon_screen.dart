@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:candlesticks/candlesticks.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:onfinance/data/candle_data.dart';
 import 'package:onfinance/ui/style/app_color.dart';
 import 'package:onfinance/ui/style/painter.dart';
 import 'package:onfinance/ui/widgets/analyst_rating.dart';
@@ -12,6 +12,9 @@ import 'package:onfinance/ui/widgets/polygon_bar.dart';
 import 'package:onfinance/ui/widgets/portfolio.dart';
 import 'package:onfinance/ui/widgets/time_frame_container.dart';
 import 'package:onfinance/ui/widgets/top_tip.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+import 'package:intl/intl.dart';
 
 import '../widgets/about_coin.dart';
 
@@ -27,6 +30,15 @@ enum ChartType { line, bar }
 class _PolygonScreenState extends State<PolygonScreen> {
   var bookMarked = false;
   var selectedType = ChartType.bar;
+  late TrackballBehavior _trackBallBehavior;
+
+  @override
+  void initState() {
+    _trackBallBehavior = TrackballBehavior(
+        enable: true, activationMode: ActivationMode.singleTap);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -76,45 +88,92 @@ class _PolygonScreenState extends State<PolygonScreen> {
                 child: Column(
                   children: [
                     PolygonBar(size: size),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        children: [
-                          TopTags(
-                            iconVisibility: true,
-                            icon: Icons.trending_up,
-                            background: Colors.black,
-                            textColor: AppColor().green,
-                            text: '2.79%',
-                          ),
-                          const SizedBox(
-                            width: 6,
-                          ),
-                          TopTags(
-                            background: AppColor().topTag,
-                            textColor: AppColor().lilac,
-                            text: 'Ascending angle',
-                          ),
-                          const SizedBox(
-                            width: 6,
-                          ),
-                          TopTags(
-                            background: AppColor().topTag,
-                            textColor: AppColor().neonRed,
-                            text: 'High Pressure',
-                          ),
-                        ],
-                      ),
-                    ),
                     Stack(
                       children: [
                         Container(
-                          height: size.height * .5,
+                          height: size.height * .58,
                           // color: Colors.white,
+                          child: SfCartesianChart(
+                            plotAreaBorderColor: AppColor().inactiveGrey,
+                            plotAreaBorderWidth: 0,
+                            margin: const EdgeInsets.all(0),
+                            series: <CandleSeries>[
+                              CandleSeries<ChartSampleData, DateTime>(
+                                  enableSolidCandles: true,
+                                  dataSource: chartData,
+                                  xValueMapper: (ChartSampleData sales, _) =>
+                                      sales.x,
+                                  lowValueMapper: (ChartSampleData sales, _) =>
+                                      sales.low,
+                                  highValueMapper: (ChartSampleData sales, _) =>
+                                      sales.high,
+                                  openValueMapper: (ChartSampleData sales, _) =>
+                                      sales.open,
+                                  closeValueMapper:
+                                      (ChartSampleData sales, _) =>
+                                          sales.close),
+                            ],
+                            primaryXAxis: DateTimeAxis(
+                              zoomFactor: 1,
+                              dateFormat: DateFormat.MMM(),
+                              majorGridLines: MajorGridLines(
+                                color: AppColor().inactiveGrey,
+                              ),
+                              minorGridLines: MinorGridLines(
+                                color: AppColor().inactiveGrey,
+                              ),
+                            ),
+                            primaryYAxis: NumericAxis(
+                              minimum: 70,
+                              maximum: 130,
+                              interval: 10,
+                              numberFormat: NumberFormat.currency(
+                                symbol: '',
+                                decimalDigits: 1,
+                              ),
+                              majorGridLines: MajorGridLines(
+                                  color: AppColor().inactiveGrey),
+                            ),
+                            trackballBehavior: _trackBallBehavior,
+                          ),
+                        ),
+                        Positioned(
+                          top: 0,
+                          left: 0,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              children: [
+                                TopTags(
+                                  iconVisibility: true,
+                                  icon: Icons.trending_up,
+                                  background: Colors.black,
+                                  textColor: AppColor().green,
+                                  text: '2.79%',
+                                ),
+                                const SizedBox(
+                                  width: 6,
+                                ),
+                                TopTags(
+                                  background: AppColor().topTag,
+                                  textColor: AppColor().lilac,
+                                  text: 'Ascending angle',
+                                ),
+                                const SizedBox(
+                                  width: 6,
+                                ),
+                                TopTags(
+                                  background: AppColor().topTag,
+                                  textColor: AppColor().neonRed,
+                                  text: 'High Pressure',
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                         Positioned(
                             right: 12,
-                            bottom: 7,
+                            bottom: 0,
                             child: Container(
                               color: Colors.black,
                               child: InkWell(

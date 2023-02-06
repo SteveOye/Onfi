@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:iconly/iconly.dart';
 import 'package:onfinance/ui/style/app_color.dart';
 
@@ -10,6 +12,8 @@ class IndicatorBottomSheet extends StatefulWidget {
 }
 
 class _IndicatorBottomSheetState extends State<IndicatorBottomSheet> {
+  var selectedCountry, selectedState;
+  var region = 'nigeria';
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,12 +31,21 @@ class _IndicatorBottomSheetState extends State<IndicatorBottomSheet> {
                   color: AppColor().lilac,
                 ),
               ),
-              Container(
-                height: 36,
-                width: 36,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: AppColor().boxGrey),
-              )
+              GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: Container(
+                  height: 36,
+                  width: 36,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: AppColor().boxGrey),
+                  child: const Icon(
+                    Icons.close,
+                    size: 15,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -49,8 +62,6 @@ class _IndicatorBottomSheetState extends State<IndicatorBottomSheet> {
               Row(
                 children: const [
                   SelectedIndicator(),
-                  SelectedIndicator(),
-                  SelectedIndicator(),
                 ],
               ),
               const SizedBox(
@@ -58,10 +69,41 @@ class _IndicatorBottomSheetState extends State<IndicatorBottomSheet> {
               ),
               Row(
                 children: [
-                  Checkbox(
-                    activeColor: AppColor().inactiveGrey,
-                    value: false,
-                    onChanged: (vaule) {},
+                  SizedBox(
+                    height: 40,
+                    width: 40,
+                    child: GFCheckbox(
+                      onChanged: (value) {},
+                      value: false,
+                      inactiveBgColor: AppColor().inactiveGrey,
+                    ),
+                  ),
+                  Expanded(
+                    child: DropdownButtonHideUnderline(
+                      child: GFDropdown(
+                        padding: const EdgeInsets.all(4),
+                        borderRadius: BorderRadius.circular(5),
+                        icon: Icon(
+                          IconlyLight.arrow_down_2,
+                          color: AppColor().inactiveGrey,
+                        ),
+                        itemHeight: 48,
+                        border: BorderSide(
+                            color: AppColor().indicatorColor, width: 2),
+                        dropdownButtonColor: AppColor().boxGrey,
+                        value: selectedCountry,
+                        onChanged: (newValue) {
+                          setState(() {});
+                        },
+                        style: const TextStyle(color: Colors.white),
+                        items: ['MA - Moving Average']
+                            .map((value) => DropdownMenuItem(
+                                  value: value,
+                                  child: Text(value),
+                                ))
+                            .toList(),
+                      ),
+                    ),
                   ),
                 ],
               )
