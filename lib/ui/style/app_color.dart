@@ -11,4 +11,8 @@ class AppColor {
   final neonGreen = const Color.fromRGBO(56, 225, 184, 1);
   final orange = const Color.fromRGBO(248, 181, 69, 1);
   final neonBlue = const Color.fromRGBO(52, 85, 255, 1);
+  final boxGrey = const Color.fromRGBO(40, 40, 49, 1);
+  final baseColor = const Color.fromARGB(174, 20, 20, 25);
+  final indicatorColor = const Color.fromRGBO(20, 20, 24, 1);
+  final indicatorBgColor = const Color.fromRGBO(17, 17, 21, 1);
 }

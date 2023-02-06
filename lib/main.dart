@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:onfinance/ui/polygon_screen.dart';
+import 'package:onfinance/ui/screens/polygon_screen.dart';
+import 'package:onfinance/ui/style/app_color.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,14 +17,18 @@ class MyApp extends StatelessWidget {
       title: 'Polygon',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: Colors.black,
-          ),
-          textTheme: Theme.of(context).textTheme.apply(
-                bodyColor: Colors.white,
-                displayColor: Colors.white,
-              ),
-          iconTheme: Theme.of(context).iconTheme.copyWith(color: Colors.white)),
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: Colors.black,
+        ),
+        textTheme: Theme.of(context).textTheme.apply(
+              bodyColor: Colors.white,
+              displayColor: Colors.white,
+            ),
+        iconTheme: Theme.of(context).iconTheme.copyWith(color: Colors.white),
+        bottomSheetTheme: BottomSheetThemeData(
+          backgroundColor: AppColor().indicatorBgColor,
+        ),
+      ),
       home: const PolygonScreen(),
     );
   }

@@ -33,13 +33,20 @@ class _AnalystWidgetState extends State<AnalystWidget> {
                   child: Column(
                     children: [
                       Row(
-                        children: const [
-                          Text(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text(
                             'Analyst Ratings',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),
+                          ),
+                          Image.asset(
+                            'assets/png/stars.png',
+                            height: 20,
+                            width: 20,
                           ),
                         ],
                       ),
